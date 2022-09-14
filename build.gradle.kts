@@ -7,13 +7,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * The name of your mod. Used to create a mod folder name (and the name of your mod, if using auto-updated mod_info.json).
  * Defaults to the name of the mod's folder.
  */
-val modName = rootDir.name
+val modName = "MnemonicSensors"
 
 /**
  * Where your Starsector game is installed to.
  * Note: On Linux, if you installed Starsector into your home directory, you have to write /home/<user>/ instead of ~/
  */
-val starsectorDirectory = "C:/Program Files (x86)/Fractal Softworks/Starsector"
+val starsectorDirectory = "D:/Spiele/Starsector"
 
 /** Defaults to the name of your mod, with spaces replaced by hyphens. */
 val modFolderName = modName.replace(" ", "-")
@@ -22,16 +22,16 @@ val modFolderName = modName.replace(" ", "-")
 // ==============
 // ==== SECTION B: USE ONLY IF AUTOMATICALLY CREATING METADATA FILES (default is not to) ====
 /** Set below to `true` to automatically create mod_info.json and Version Checker files. */
-val shouldAutomaticallyCreateMetadataFiles = false
+val shouldAutomaticallyCreateMetadataFiles = true
 // Then, if above is set to true, update the rest of the information below in SECTION B.
-val modVersion = "1.0.0"
+val modVersion = "0.1.0"
 val jarFileName = "${modName.replace(" ", "-")}.jar"
-val modId = "yourName_uniqueId"
-val modAuthor = "Your Name"
-val modDescription = "Mod description."
+val modId = "dp_mnemonic_sensors"
+val modAuthor = "DesperatePeter"
+val modDescription = "Colors sensor traces of known objects differently"
 val gameVersion = "0.95.1a-RC6"
 val jars = arrayOf("jars/$jarFileName")
-val modPlugin = "com.example.ExampleModPlugin"
+val modPlugin = "com.dp.mnemonicsensors.MnemonicSensorsBasePlugin"
 val isUtilityMod = false
 val masterVersionFile = "https://raw.githubusercontent.com/githubname/githubrepo/master/$modId.version"
 val modThreadId = "00000"

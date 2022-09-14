@@ -1,4 +1,4 @@
-package com.example
+package com.dp.mnemonicsensors
 
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
@@ -10,16 +10,11 @@ import com.thoughtworks.xstream.XStream
  * unless mod_info.json is edited to use it
  * (or it is renamed to "ExampleModPlugin" in order to replace the Java version).
  */
-class ExampleModPluginKotlin : BaseModPlugin() {
+class MnemonicSensorsBasePlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
-
-        // Showing that we can compile and run Java files as well.
-        // This does nothing and can be deleted.
-        if (Global.getSettings().isDevMode) {
-            Global.getSector().addTransientScript(ExampleEveryFrameScript())
-        }
+        Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
     }
 
     /**
