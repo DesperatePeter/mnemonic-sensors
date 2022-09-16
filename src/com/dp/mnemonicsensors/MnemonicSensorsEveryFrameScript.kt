@@ -3,21 +3,36 @@ package com.dp.mnemonicsensors
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
-import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
-import com.fs.starfarer.api.campaign.CustomCampaignEntityPlugin
+// import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
-import com.fs.starfarer.api.impl.campaign.ids.Factions
+import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.GL11
-import java.awt.Color
+import org.lwjgl.util.vector.Vector2f
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
+import org.lazywizard.lazylib.ext.*
 
 private const val MS_ENTITY_CUSTOM_DATA_KEY = "MS_TMPKEY"
-private const val MS_CUSTOM_ENTITY_CLASS = "MS_CUSTOM_ENTITY_7FGH"
+// private const val MS_CUSTOM_ENTITY_CLASS = "MS_CUSTOM_ENTITY_7FGH"
+private const val CIRCLE_POINTS = 20
+
 
 class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
-    private val locs = mutableListOf<Pair<Float, Float>>()
-    private var entity : CustomCampaignEntityAPI? = null
+    companion object{
+        // values taken from positioning mouse cursor and reading object locations and Mouse.getX/Y
+        // on screen resolution 1920x1080p with UI scaling 100%
+        val uiMult = Global.getSettings()?.screenScaleMult ?: 1f
+        val COMPASS_WORLD_RADIUS : Float = Global.getSettings()?.getInt("campaignRadarRadius")?.toFloat() ?: 6000f
+        val compassScreenCenter = Vector2f(Global.getSettings().screenWidthPixels - 135f * uiMult, 123f * uiMult)
+        val compassScreenRadius = 87f * uiMult
+        val compassObjRadius = 5f * uiMult
+    }
+
+    private val locs = mutableListOf<SensorSignatureFrameData>()
+    // private var entity : CustomCampaignEntityAPI? = null
 
     override fun isDone(): Boolean = false
 
@@ -25,13 +40,23 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
     override fun advance(amount: Float) {
         locs.clear()
-        val cl = Global.getSector()?.playerFleet?.containingLocation
-        if (entity?.containingLocation != cl){
-            entity?.containingLocation?.removeEntity(entity)
-            entity = cl?.addCustomEntity("ms_hacky_id", "NONE", MS_CUSTOM_ENTITY_CLASS, Factions.INDEPENDENT, this)
-            entity?.setFixedLocation(-10000f, -10000f)
-            entity?.radius = 0f
+        val cl = Global.getSector()?.playerFleet?.containingLocation ?: return
+        val pfLoc = Global.getSector()?.playerFleet?.location ?: return
+        val vp = Global.getSector()?.viewport ?: return
+        val toScreenX = { x: Float -> (vp.convertWorldXtoScreenX(x)) / vp.visibleWidth * Global.getSettings().screenWidthPixels * vp.viewMult  }
+        val toScreenY = { y: Float -> (vp.convertWorldYtoScreenY(y)) / vp.visibleHeight * Global.getSettings().screenHeightPixels  * vp.viewMult}
+        fun toCompassPos(pos: Vector2f): Vector2f?{
+            val relPos = pos - pfLoc
+            if(relPos.length() > COMPASS_WORLD_RADIUS) return null
+            relPos.scale(compassScreenRadius/ COMPASS_WORLD_RADIUS)
+            return relPos + compassScreenCenter
         }
+//        if (entity?.containingLocation != cl){
+//            entity?.containingLocation?.removeEntity(entity)
+//            entity = cl.addCustomEntity("ms_hacky_id", "NONE", MS_CUSTOM_ENTITY_CLASS, Factions.INDEPENDENT, this)
+//            entity?.setFixedLocation(-10000f, -10000f)
+//            entity?.radius = 0f
+//        }
 
         Global.getSector().playerFleet.containingLocation.allEntities.filterNotNull().filter {
             it.sensorProfile > 0f
@@ -44,37 +69,49 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
             it.customData.containsKey(MS_ENTITY_CUSTOM_DATA_KEY)
                     && it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.SENSOR_CONTACT
         }.forEach {
-            val vp = Global.getSector().viewport
-            val toScreenX = { x: Float -> (vp.convertWorldXtoScreenX(x) /*- vp.llx*/) / vp.visibleWidth * Global.getSettings().screenWidthPixels  }
-            val toScreenY = { y: Float -> (vp.convertWorldYtoScreenY(y) /*- vp.lly*/) / vp.visibleHeight * Global.getSettings().screenHeightPixels  }
-//            val x = vp.convertWorldXtoScreenX(it.location.x) // + vp.center.x
-//            val y = vp.convertWorldXtoScreenX(it.location.y) // + vp.center.y
+
             val x = toScreenX(it.location.x)
             val y = toScreenY(it.location.y)
-            locs.add(Pair(x, y))
+            locs.add(SensorSignatureFrameData(x, y, it.radius / vp.viewMult * uiMult, it.indicatorColor))
+            toCompassPos(it.location)?.let { cl ->
+                locs.add(SensorSignatureFrameData(cl.x, cl.y,  compassObjRadius, it.indicatorColor))
+            }
         }
+        render(CampaignEngineLayers.ABOVE, null)
     }
     fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?){
         if(layer != CampaignEngineLayers.ABOVE) return
+        if(locs.isEmpty()) return
+        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS)
+        GL11.glMatrixMode(GL11.GL_PROJECTION)
         GL11.glPushMatrix()
+        GL11.glLoadIdentity()
+        GL11.glMatrixMode(GL11.GL_MODELVIEW)
+        GL11.glPushMatrix()
+        GL11.glLoadIdentity()
         GL11.glDisable(GL11.GL_TEXTURE_2D)
         GL11.glEnable(GL11.GL_BLEND)
-        GL11.glColor4f(0.5f, 0.5f, 0.5f, 1.0f)
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-        GL11.glBegin(GL11.GL_LINE_STRIP)
-        GL11.glLineWidth(10f)
-        val h = 10f
-        val w = 10f
+        GL11.glViewport(0,0, Display.getWidth(), Display.getHeight())
+        GL11.glOrtho(0.0, Display.getWidth().toDouble(),0.0, Display.getHeight().toDouble(),-1.0, 1.0)
+
         locs.forEach{
-            val x = it.first
-            val y = it.second
-            GL11.glVertex2f(x - w/2f, y + h/2f)
-            GL11.glVertex2f(x + w/2f, y + h/2f)
-            GL11.glVertex2f(x + w/2f, y - h/2f)
-            GL11.glVertex2f(x - w/2f, y - h/2f)
-            GL11.glVertex2f(x - w/2f, y + h/2f)
+            GL11.glBegin(GL11.GL_LINE_LOOP)
+            GL11.glLineWidth(10f)
+            val x = it.x
+            val y = it.y
+            GL11.glColor4f(it.color.red.toFloat()/255f, it.color.green.toFloat()/255f, it.color.blue.toFloat()/255f, 1.0f)
+            for (i in 0 until CIRCLE_POINTS){
+                val angle = i.toFloat() / CIRCLE_POINTS.toFloat() * 2f * PI.toFloat()
+                GL11.glVertex2f(x + (cos(angle) * it.r), y + (sin(angle)*it.r))
+            }
+            GL11.glEnd()
         }
-        GL11.glEnd()
+
+        GL11.glDisable(GL11.GL_BLEND)
         GL11.glPopMatrix()
+        GL11.glMatrixMode(GL11.GL_PROJECTION)
+        GL11.glPopMatrix()
+        GL11.glPopAttrib()
     }
 }

@@ -8,7 +8,9 @@ import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 
-
+/**
+ * currently unused!
+ */
 class MnemonicSensorsDummyEntityScript: BaseCustomEntityPlugin() {
     private var script: MnemonicSensorsEveryFrameScript? = null
     private var entity: SectorEntityToken? = null
