@@ -1,6 +1,7 @@
 package com.dp.mnemonicsensors
 
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 // import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
@@ -9,15 +10,12 @@ import com.fs.starfarer.api.combat.ViewportAPI
 import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
 import org.lazywizard.lazylib.ext.*
+import org.lazywizard.lazylib.opengl.DrawUtils
 
 private const val MS_ENTITY_CUSTOM_DATA_KEY = "MS_TMPKEY"
 // private const val MS_CUSTOM_ENTITY_CLASS = "MS_CUSTOM_ENTITY_7FGH"
-private const val CIRCLE_POINTS = 20
-
+private const val CIRCLE_POINTS = 50
 
 class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
@@ -39,6 +37,7 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
     override fun runWhilePaused(): Boolean = true
 
     override fun advance(amount: Float) {
+        if (Global.getCurrentState() != GameState.CAMPAIGN) return
         locs.clear()
         val cl = Global.getSector()?.playerFleet?.containingLocation ?: return
         val pfLoc = Global.getSector()?.playerFleet?.location ?: return
@@ -82,6 +81,7 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
     fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?){
         if(layer != CampaignEngineLayers.ABOVE) return
         if(locs.isEmpty()) return
+        if(Global.getSector().campaignUI.isShowingDialog || Global.getSector().campaignUI.isShowingMenu) return
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS)
         GL11.glMatrixMode(GL11.GL_PROJECTION)
         GL11.glPushMatrix()
@@ -94,18 +94,14 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glViewport(0,0, Display.getWidth(), Display.getHeight())
         GL11.glOrtho(0.0, Display.getWidth().toDouble(),0.0, Display.getHeight().toDouble(),-1.0, 1.0)
+        GL11.glTranslatef(0.01f, 0.01f, 0f)
+        GL11.glEnable(GL11.GL_LINE_SMOOTH)
+        GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST)
+        GL11.glLineWidth(1.5f)
 
         locs.forEach{
-            GL11.glBegin(GL11.GL_LINE_LOOP)
-            GL11.glLineWidth(10f)
-            val x = it.x
-            val y = it.y
-            GL11.glColor4f(it.color.red.toFloat()/255f, it.color.green.toFloat()/255f, it.color.blue.toFloat()/255f, 1.0f)
-            for (i in 0 until CIRCLE_POINTS){
-                val angle = i.toFloat() / CIRCLE_POINTS.toFloat() * 2f * PI.toFloat()
-                GL11.glVertex2f(x + (cos(angle) * it.r), y + (sin(angle)*it.r))
-            }
-            GL11.glEnd()
+            GL11.glColor4f(it.color.red.toFloat()/255f, it.color.green.toFloat()/255f, it.color.blue.toFloat()/255f, 0.6f)
+            DrawUtils.drawCircle(it.x, it.y, it.r, CIRCLE_POINTS, false)
         }
 
         GL11.glDisable(GL11.GL_BLEND)
