@@ -2,11 +2,11 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/DesperatePeter/mnemonic-sensors/master/dp_mnemonic_sensors.version",
     "modName":"MnemonicSensors",
-    "modThreadId":00000,
+    "modThreadId":25328,
     "modVersion":
     {
         "major":0,
-        "minor":1,
-        "patch":1
+        "minor":2,
+        "patch":0
     }
 }

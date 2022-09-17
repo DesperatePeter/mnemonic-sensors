@@ -4,6 +4,7 @@ import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 // import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
@@ -12,6 +13,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
 import org.lazywizard.lazylib.ext.*
 import org.lazywizard.lazylib.opengl.DrawUtils
+import java.awt.Color
 
 private const val MS_ENTITY_CUSTOM_DATA_KEY = "MS_TMPKEY"
 // private const val MS_CUSTOM_ENTITY_CLASS = "MS_CUSTOM_ENTITY_7FGH"
@@ -35,6 +37,14 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
     override fun isDone(): Boolean = false
 
     override fun runWhilePaused(): Boolean = true
+
+    fun determineColor(entity: SectorEntityToken) : Color{
+        return when{
+            entity is CampaignFleetAPI -> Color.BLUE
+            entity.name == "Cargo Pods" -> Color.YELLOW
+            else -> Color.GRAY
+        }
+    }
 
     override fun advance(amount: Float) {
         if (Global.getCurrentState() != GameState.CAMPAIGN) return
@@ -71,9 +81,9 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
             val x = toScreenX(it.location.x)
             val y = toScreenY(it.location.y)
-            locs.add(SensorSignatureFrameData(x, y, it.radius / vp.viewMult * uiMult, it.indicatorColor))
+            locs.add(SensorSignatureFrameData(x, y, it.radius / vp.viewMult * uiMult, determineColor(it)))
             toCompassPos(it.location)?.let { cl ->
-                locs.add(SensorSignatureFrameData(cl.x, cl.y,  compassObjRadius, it.indicatorColor))
+                locs.add(SensorSignatureFrameData(cl.x, cl.y,  compassObjRadius, determineColor(it)))
             }
         }
         render(CampaignEngineLayers.ABOVE, null)

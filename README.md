@@ -9,3 +9,4 @@ a cargo pod full of metal that you left behind rather than some shiny loot.
 
 - 0.1.0: initial release
 - 0.1.1: fix issue with circles showing in GUIs, prettier circles
+- 0.2.0: add different colors for different object types
