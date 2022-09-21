@@ -4,7 +4,7 @@
     "name": "MnemonicSensors",
     "author": "DesperatePeter",
     "utility": "true",
-    "version": { "major":"0", "minor": "2", "patch": "0" },
+    "version": { "major":"0", "minor": "2", "patch": "1" },
     "description": "Marks known sensor traces with a circle",
     "gameVersion": "0.95.1a-RC6",
     "jars":["jars/MnemonicSensors.jar"],

@@ -5,9 +5,10 @@ import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
-// import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
+import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Vector2f
@@ -16,7 +17,7 @@ import org.lazywizard.lazylib.opengl.DrawUtils
 import java.awt.Color
 
 private const val MS_ENTITY_CUSTOM_DATA_KEY = "MS_TMPKEY"
-// private const val MS_CUSTOM_ENTITY_CLASS = "MS_CUSTOM_ENTITY_7FGH"
+private const val MS_CUSTOM_ENTITY_CLASS = "MS_CUSTOM_ENTITY_7FGH"
 private const val CIRCLE_POINTS = 50
 
 class MnemonicSensorsEveryFrameScript : EveryFrameScript {
@@ -32,7 +33,7 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
     }
 
     private val locs = mutableListOf<SensorSignatureFrameData>()
-    // private var entity : CustomCampaignEntityAPI? = null
+    private var entity : CustomCampaignEntityAPI? = null
 
     override fun isDone(): Boolean = false
 
@@ -40,7 +41,7 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
     fun determineColor(entity: SectorEntityToken) : Color{
         return when{
-            entity is CampaignFleetAPI -> Color.BLUE
+            entity is CampaignFleetAPI -> entity.faction?.color ?: Color.BLUE
             entity.name == "Cargo Pods" -> Color.YELLOW
             else -> Color.GRAY
         }
@@ -60,12 +61,12 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
             relPos.scale(compassScreenRadius/ COMPASS_WORLD_RADIUS)
             return relPos + compassScreenCenter
         }
-//        if (entity?.containingLocation != cl){
-//            entity?.containingLocation?.removeEntity(entity)
-//            entity = cl.addCustomEntity("ms_hacky_id", "NONE", MS_CUSTOM_ENTITY_CLASS, Factions.INDEPENDENT, this)
-//            entity?.setFixedLocation(-10000f, -10000f)
-//            entity?.radius = 0f
-//        }
+        if (entity?.containingLocation != cl){
+            entity?.containingLocation?.removeEntity(entity)
+            entity = cl.addCustomEntity("ms_hacky_id", "NONE", MS_CUSTOM_ENTITY_CLASS, Factions.INDEPENDENT, this)
+            entity?.setFixedLocation(-10000f, -10000f)
+            entity?.radius = 0f
+        }
 
         Global.getSector().playerFleet.containingLocation.allEntities.filterNotNull().filter {
             it.sensorProfile > 0f
@@ -81,15 +82,14 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
             val x = toScreenX(it.location.x)
             val y = toScreenY(it.location.y)
-            locs.add(SensorSignatureFrameData(x, y, it.radius / vp.viewMult * uiMult, determineColor(it)))
+            locs.add(SensorSignatureFrameData(x, y, it.radius / vp.viewMult * uiMult, determineColor(it), CampaignEngineLayers.FLEETS))
             toCompassPos(it.location)?.let { cl ->
-                locs.add(SensorSignatureFrameData(cl.x, cl.y,  compassObjRadius, determineColor(it)))
+                locs.add(SensorSignatureFrameData(cl.x, cl.y,  compassObjRadius, determineColor(it), CampaignEngineLayers.ABOVE))
             }
         }
         render(CampaignEngineLayers.ABOVE, null)
     }
     fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?){
-        if(layer != CampaignEngineLayers.ABOVE) return
         if(locs.isEmpty()) return
         if(Global.getSector().campaignUI.isShowingDialog || Global.getSector().campaignUI.isShowingMenu) return
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS)
@@ -109,7 +109,7 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
         GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST)
         GL11.glLineWidth(1.5f)
 
-        locs.forEach{
+        locs.filter { it.layer == layer }.forEach{
             GL11.glColor4f(it.color.red.toFloat()/255f, it.color.green.toFloat()/255f, it.color.blue.toFloat()/255f, 0.6f)
             DrawUtils.drawCircle(it.x, it.y, it.r, CIRCLE_POINTS, false)
         }
