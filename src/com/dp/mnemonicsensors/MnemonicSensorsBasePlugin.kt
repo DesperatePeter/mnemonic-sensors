@@ -14,6 +14,11 @@ class MnemonicSensorsBasePlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         super.onGameLoad(newGame)
+        if(MnemonicSensorSettings.isRemovalMode()){
+            Global.getLogger(this.javaClass).info("Mnemonic Sensors removal mode activated." +
+                    " Save your game and you will be able to remove this mod.")
+            return
+        }
         Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
     }
 

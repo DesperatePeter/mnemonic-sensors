@@ -24,6 +24,10 @@ class MnemonicSensorsDummyEntityScript: BaseCustomEntityPlugin() {
 
     override fun advance(amount: Float) {
         super.advance(amount)
+        if(!Global.getSector().transientScripts.contains(script)){
+            entity.containingLocation.removeEntity(entity)
+            return
+        }
         val fpLoc = Global.getSector()?.playerFleet?.location ?: return
         entity?.setFixedLocation(fpLoc.x, fpLoc.y)
     }
