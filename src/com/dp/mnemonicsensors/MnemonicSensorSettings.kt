@@ -7,12 +7,13 @@ import java.io.IOException
 
 class MnemonicSensorSettings{
     companion object{
-        private const val SETTINGS_FILE_NAME = "settings.json"
+        private const val SETTINGS_FILE_NAME = "MnemonicSensorSettings.json"
         private const val REMOVAL_MODE_KEY = "removalMode"
         fun isRemovalMode() : Boolean{
             var json : JSONObject? = null
             try {
                 Global.getSettings().loadJSON(SETTINGS_FILE_NAME).also { json = it }
+                return json?.get(REMOVAL_MODE_KEY) == true
             } catch (e: IOException) {
                 Global.getLogger(Companion::class.java).warn(
                     "Unable to load settings file settings.json! Falling back to default settings", e
@@ -22,7 +23,7 @@ class MnemonicSensorSettings{
                     "Invalid settings file, please double-check! Falling back to default settings", e
                 )
             }
-            return json?.get(REMOVAL_MODE_KEY) == true
+            return false
         }
     }
 }

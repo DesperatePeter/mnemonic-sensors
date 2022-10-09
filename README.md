@@ -12,3 +12,4 @@ a cargo pod full of metal that you left behind rather than some shiny loot.
 - 0.2.0: add different colors for different object types
 - 0.2.1: fix circles being rendered above fleet screens
 - 0.2.2: fix issue with additional circles when loading game, add removal mode
+- 0.2.3: hopefully fix potential issue with settings file loading
