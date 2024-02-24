@@ -1,6 +1,6 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 ms_enabledFeaturesHeader,MS Header,Header,Enabled Features,,,,,
-ms_enabledFeaturesText,Enabled Features Text,Text,"Enable/disable entire features. Changes might only take effect on reloading the game.",,"",,,
+ms_enabledFeaturesText,Enabled Features Text,Text,"Enable/disable entire features. Save the game or reload after enabling/disabling features to apply.",,"",,,
 ms_enableMnemonicSensors,Enable Mnemonic Sensors,Boolean,true,,"Mark known sensor signatures.",,,
 ms_enableTrashDisposal,Enable Trash Disposal,Boolean,true,,"Set to false to disable the entire Trash Disposal feature.",,,
 ms_enableGridRemoval,Enable Grid Removal,Boolean,true,,"Set to true to remove the square grid in system maps. Feature implemented by Genir, all credits and many thanks to him!",,,

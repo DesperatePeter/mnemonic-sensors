@@ -11,6 +11,17 @@ import com.thoughtworks.xstream.XStream
 
 class MnemonicBasePlugin : BaseModPlugin() {
     override fun beforeGameSave() {
+        cleanSave()
+        setSystemGridLineWidth(null)
+        super.beforeGameSave()
+    }
+
+    override fun afterGameSave() {
+        enableFeatures()
+        super.afterGameSave()
+    }
+
+    private fun cleanSave(){
         while(Global.getSector().listenerManager.hasListenerOfClass(TrashDisposalListener::class.java))
             Global.getSector().listenerManager.removeListenerOfClass(TrashDisposalListener::class.java)
         while(Global.getSector().listenerManager.hasListenerOfClass(GateMarkerGenerator::class.java))
@@ -19,25 +30,30 @@ class MnemonicBasePlugin : BaseModPlugin() {
         MnemonicSensorsEveryFrameScript.cleanEntity()
     }
 
-    override fun onGameLoad(newGame: Boolean) {
-        super.onGameLoad(newGame)
-        if(MnemonicSettings.enableMnemonicSensors()){
-            Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
-        }
+    private fun enableFeatures(){
         if(MnemonicSettings.enableTrashDisposal()){
             Global.getSector().listenerManager.addListener(TrashDisposalListener)
-        }
-        if(MnemonicSettings.enableGridRemoval()){
-            removeSystemGrids()
         }
         if(MnemonicSettings.enableGateMarkings()){
             Global.getSector().listenerManager.addListener(GateMarkerGenerator())
         }
+        if(MnemonicSettings.enableGridRemoval()){
+            setSystemGridLineWidth(0f)
+        }
+        if(MnemonicSettings.enableMnemonicSensors()){
+            if(!Global.getSector().listenerManager.hasListenerOfClass(MnemonicSensorsEveryFrameScript::class.java)){
+                Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
+            }
+        }
+    }
+
+    override fun onGameLoad(newGame: Boolean) {
+        super.onGameLoad(newGame)
+        enableFeatures()
     }
 
     override fun onApplicationLoad() {
         if(LunaSettingHandler.isLunaLibPresent){
-            loadLunaSettings()
             addLunaSettingListener { loadLunaSettings() }
         }
         super.onApplicationLoad()

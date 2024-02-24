@@ -1,5 +1,10 @@
 === For Starsector 0.97a ===
 
+- 0.1.2:
+fix: Issue where saving the game disabled many features
+fix: Issue where system map grid removal was irreversible
+feat: saving the game now applies settings
+
 - 0.1.1: initial release, containing four features. All features can be disabled via LunaSettings
 
 Mnemonic Sensors: Mark known sensor readings to prevent you from chasing your own cargo pods
