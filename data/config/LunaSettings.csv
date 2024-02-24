@@ -18,7 +18,7 @@ By default, ore always gets removed. Medium-value commodities such as metals onl
 You can choose for each cargo type whether you want to always remove it, only remove it when your cargo is (almost) full or to never remove it.
 
 When you set a commodity to CargoFull, the portion that would bring you over the CargoPercentage will get removed.",,"",,,
-ms_cargoPercentage,Cargo Percentage,Int,90,,"Consider cargo bays to be full when used cargo space is higher than N%",0,100,
+ms_cargoPercentage,Cargo Percentage,Int,90,,"Consider cargo bays to be full when used cargo space is higher than N percent",0,100,
 ms_filterOre,Remove Ore,Radio,"Always","Always,CargoFull,Never","",,,
 ms_filterRareOre,Remove Transplutonic Ore,Radio,"Never","Always,CargoFull,Never","",,,
 ms_filterMetals,Remove Metals,Radio,"CargoFull","Always,CargoFull,Never","",,,

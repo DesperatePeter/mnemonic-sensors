@@ -1,0 +1,14 @@
+=== For Starsector 0.97a ===
+
+- 0.1.0: initial release, containing four features. All features can be disabled via LunaSettings
+
+Mnemonic Sensors: Mark known sensor readings to prevent you from chasing your own cargo pods
+Gate Markers: Mark systems with gates on the Star Map once you have unlocked gate travel
+Trash Disposal: Automatically remove low-value items from loot screen (if your cargo is almost full). Cf. LunaSettings for details
+Gridless System Maps: Remove the grid from system maps for a more beautiful exploration experience. Code and idea contributed by Genir, many thanks and all credits to him!
+
+
+Note:
+
+This mod was previously called MnemonicSensors. However, since that mod was abandoned and the mnemonic sensor functionality
+is only one part of this mod, I have decided to repurpose this repository for the MnemonicUtils mod.

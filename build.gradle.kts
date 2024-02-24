@@ -24,7 +24,7 @@ val modFolderName = modName.replace(" ", "-")
 /** Set below to `true` to automatically create mod_info.json and Version Checker files. */
 val shouldAutomaticallyCreateMetadataFiles = true
 // Then, if above is set to true, update the rest of the information below in SECTION B.
-val modVersion = "0.2.3"
+val modVersion = "0.1.0"
 val jarFileName = "${modName.replace(" ", "-")}.jar"
 val modId = "dp_mnemonic_utils"
 val modAuthor = "DesperatePeter"
@@ -176,7 +176,9 @@ tasks {
                             "major":${version._1},
                             "minor":${version._2},
                             "patch":${version._3}
-                        }
+                        },
+                        "directDownloadURL": "https://github.com/DesperatePeter/mnemonic-sensors/releases/download/${version._1}.${version._2}.${version._3}/MnemonicUtils-${version._1}.${version._2}.${version._3}.zip",
+                        "changelogURL": "https://raw.githubusercontent.com/DesperatePeter/mnemonic-sensors/master/changelog.txt"
                     }
                 """.trimIndent()
                 )

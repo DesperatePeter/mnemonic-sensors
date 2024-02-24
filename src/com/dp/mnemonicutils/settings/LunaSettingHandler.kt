@@ -27,7 +27,10 @@ class LunaSettingHandler<T>(private val key: String, private val defaultValue: T
             get() = Global.getSettings().modManager.isModEnabled(LUNALIB_MOD_ID)
     }
     operator fun invoke(): T{
-        return value ?: defaultValue
+        return value ?: kotlin.run {
+            loadLunaSettings()
+            value
+        } ?: defaultValue
     }
 
     override fun load() {

@@ -22,8 +22,8 @@ object MnemonicSettings{
     private fun amountByType(type: CargoEnumSettingHandler.Companion.CargoRemovalType, freeSpace: Float): Float{
         return when(type){
             CargoEnumSettingHandler.Companion.CargoRemovalType.ALWAYS -> 0f
-            CargoEnumSettingHandler.Companion.CargoRemovalType.NEVER -> freeSpace
-            CargoEnumSettingHandler.Companion.CargoRemovalType.CARGO_FULL -> Float.POSITIVE_INFINITY
+            CargoEnumSettingHandler.Companion.CargoRemovalType.NEVER -> Float.POSITIVE_INFINITY
+            CargoEnumSettingHandler.Companion.CargoRemovalType.CARGO_FULL -> freeSpace
         }
     }
 

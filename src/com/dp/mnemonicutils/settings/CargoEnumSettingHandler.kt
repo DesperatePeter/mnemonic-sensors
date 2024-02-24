@@ -13,7 +13,7 @@ class CargoEnumSettingHandler(private val key: String) {
         )
     }
 
-    val settings = LunaSettingHandler(key, "Always")
+    val settings = LunaSettingHandler(key, "Never")
 
     operator fun invoke(): CargoRemovalType{
         return cargoRemovalTypeStringToEnum[settings()] ?: CargoRemovalType.NEVER

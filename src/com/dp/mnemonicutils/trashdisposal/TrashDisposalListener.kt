@@ -11,7 +11,7 @@ object TrashDisposalListener: ShowLootListener {
         if(!MnemonicSettings.enableTrashDisposal()) return
         loot ?: return
         val playerCargo = Global.getSector().playerFleet.cargo ?: return
-        val freeSpace = playerCargo.spaceLeft - (playerCargo.maxCapacity * (100 - MnemonicSettings.cargoPercentage()).toFloat())
+        val freeSpace = playerCargo.spaceLeft - (playerCargo.maxCapacity * (100 - MnemonicSettings.cargoPercentage()).toFloat()/100f)
 
         MnemonicSettings.generateCargoToKeepMap(freeSpace).forEach { entry -> // Using key, value -> causes JRE7 incompatibility
             val surplus = loot.getCommodityQuantity(entry.key) - entry.value
