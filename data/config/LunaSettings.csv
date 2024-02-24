@@ -1,10 +1,6 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 ms_enabledFeaturesHeader,MS Header,Header,Enabled Features,,,,,
-ms_enabledFeaturesText,Enabled Features Text,Text,"Enable/disable entire features. Changes might only take effect on reloading the game.
-
-If you want to remove this mod, set all features to false, pass a tiny bit of time and then save your game. Exit Starsector and you should then be able to disable this mod.
-
-This is necessary because this mod adds several new campaign entities. If you load a game with all features active and then deactivate them, those entities will delete themselves.",,"",,,
+ms_enabledFeaturesText,Enabled Features Text,Text,"Enable/disable entire features. Changes might only take effect on reloading the game.",,"",,,
 ms_enableMnemonicSensors,Enable Mnemonic Sensors,Boolean,true,,"Mark known sensor signatures.",,,
 ms_enableTrashDisposal,Enable Trash Disposal,Boolean,true,,"Set to false to disable the entire Trash Disposal feature.",,,
 ms_enableGridRemoval,Enable Grid Removal,Boolean,true,,"Set to true to remove the square grid in system maps. Feature implemented by Genir, all credits and many thanks to him!",,,

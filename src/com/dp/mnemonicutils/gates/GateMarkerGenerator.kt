@@ -13,14 +13,36 @@ class GateMarkerGenerator: CurrentLocationChangedListener {
 
     companion object{
         const val ENTITY_ID = "MS_CUSTOM_ENTITY_GM9P"
+
+        private val knownSystemsWithGates: List<StarSystemAPI>
+            get() {
+                return Global.getSector().starSystems?.filterNotNull()?.filter { system ->
+                    system.isEnteredByPlayer
+                }?.filter { system ->
+                    system.allEntities.any { entity ->
+                        entity.customEntityType?.contains("_gate") == true
+                    }
+                } ?: emptyList()
+            }
+
+        private val gateMarkers: List<CustomCampaignEntityAPI>
+            get() {
+                return Global.getSector().hyperspace?.customEntities?.filterNotNull()?.filter { entity ->
+                    entity.customEntityType == ENTITY_ID
+                } ?: emptyList()
+            }
+
+        fun cleanGateMarkers(){
+            val markers = gateMarkers.toMutableList().toList()
+            markers.forEach {
+                it.containingLocation.removeEntity(it)
+            }
+        }
     }
 
     override fun reportCurrentLocationChanged(prev: LocationAPI?, curr: LocationAPI?) {
         if(!MnemonicSettings.shouldMarkGates) return
-        val markers = gateMarkers.toMutableList().toList()
-        markers.forEach {
-            it.containingLocation.removeEntity(it)
-        }
+        cleanGateMarkers()
         knownSystemsWithGates.forEach {
             spawnGateMarker(it)
         }
@@ -39,22 +61,6 @@ class GateMarkerGenerator: CurrentLocationChangedListener {
         entity?.setFixedLocation(system.location.x, system.location.y)
     }
 
-    private val knownSystemsWithGates: List<StarSystemAPI>
-        get() {
-            return Global.getSector().starSystems?.filterNotNull()?.filter { system ->
-                system.isEnteredByPlayer
-            }?.filter { system ->
-                system.allEntities.any { entity ->
-                    entity.customEntityType?.contains("_gate") == true
-                }
-            } ?: emptyList()
-        }
 
-    private val gateMarkers: List<CustomCampaignEntityAPI>
-        get() {
-            return Global.getSector().hyperspace?.customEntities?.filterNotNull()?.filter { entity ->
-                entity.customEntityType == ENTITY_ID
-            } ?: emptyList()
-        }
 
 }

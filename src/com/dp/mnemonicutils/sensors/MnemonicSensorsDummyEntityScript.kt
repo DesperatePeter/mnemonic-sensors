@@ -1,5 +1,6 @@
 package com.dp.mnemonicutils.sensors
 
+import com.dp.mnemonicutils.settings.MnemonicSettings
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.SectorEntityToken
@@ -22,7 +23,7 @@ class MnemonicSensorsDummyEntityScript: BaseCustomEntityPlugin() {
 
     override fun advance(amount: Float) {
         super.advance(amount)
-        if(!Global.getSector().transientScripts.contains(script)){
+        if(!MnemonicSettings.enableMnemonicSensors()){
             entity.containingLocation.removeEntity(entity)
             return
         }

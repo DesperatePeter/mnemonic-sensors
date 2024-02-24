@@ -31,6 +31,14 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
         val compassScreenCenter = Vector2f(Global.getSettings().screenWidthPixels - 135f * uiMult, 123f * uiMult)
         val compassScreenRadius = 87f * uiMult
         val compassObjRadius = 5f * uiMult
+
+        fun cleanEntity(){
+            Global.getSector()?.playerFleet?.containingLocation?.allEntities?.firstOrNull {
+                it.customEntityType == MS_CUSTOM_ENTITY_CLASS
+            }?.let {
+                Global.getSector()?.playerFleet?.containingLocation?.removeEntity(it)
+            }
+        }
     }
 
     private val locations = mutableListOf<SensorSignatureFrameData>()
