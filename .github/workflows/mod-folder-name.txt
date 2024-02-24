@@ -1,1 +1,1 @@
-MnemonicSensors
+MnemonicUtils

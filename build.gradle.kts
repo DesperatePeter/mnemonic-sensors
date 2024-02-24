@@ -7,13 +7,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * The name of your mod. Used to create a mod folder name (and the name of your mod, if using auto-updated mod_info.json).
  * Defaults to the name of the mod's folder.
  */
-val modName = "MnemonicSensors"
+val modName = "MnemonicUtils"
 
 /**
  * Where your Starsector game is installed to.
  * Note: On Linux, if you installed Starsector into your home directory, you have to write /home/<user>/ instead of ~/
  */
-val starsectorDirectory = "D:/Spiele/Starsector"
+val starsectorDirectory = if(providers.gradleProperty("starsector.dir").isPresent) providers.gradleProperty("starsector.dir").get() else "/home/jannes/games/starsector"
 
 /** Defaults to the name of your mod, with spaces replaced by hyphens. */
 val modFolderName = modName.replace(" ", "-")
@@ -26,12 +26,12 @@ val shouldAutomaticallyCreateMetadataFiles = true
 // Then, if above is set to true, update the rest of the information below in SECTION B.
 val modVersion = "0.2.3"
 val jarFileName = "${modName.replace(" ", "-")}.jar"
-val modId = "dp_mnemonic_sensors"
+val modId = "dp_mnemonic_utils"
 val modAuthor = "DesperatePeter"
-val modDescription = "Marks known sensor traces with a circle"
-val gameVersion = "0.95.1a-RC6"
+val modDescription = "Offers exploration utility features, such as marking known sensor traces and gates or filtering out worthless loot"
+val gameVersion = "0.97a"
 val jars = arrayOf("jars/$jarFileName")
-val modPlugin = "com.dp.mnemonicsensors.MnemonicSensorsBasePlugin"
+val modPlugin = "com.dp.mnemonicutils.MnemonicBasePlugin"
 val isUtilityMod = true
 val masterVersionFile = "https://raw.githubusercontent.com/DesperatePeter/mnemonic-sensors/master/$modId.version"
 val modThreadId = "25328"
@@ -139,7 +139,11 @@ tasks {
                                 "id": "lw_lazylib",
                                 "name": "LazyLib",
                                 # "version": "2.6" # If a specific version or higher is required, include this line
-                            }
+                            },
+                            {
+                                "id": "lunalib",
+                                "name": "LunaLib",
+                            },
                         ]
                     }
                 """.trimIndent()

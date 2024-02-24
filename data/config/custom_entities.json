@@ -12,6 +12,22 @@
     "scaleNameWithZoom":false,
     "scaleIconWithZoom":true,
     "layers":[FLEETS], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
-    "pluginClass":"com.dp.mnemonicsensors.MnemonicSensorsDummyEntityScript",
+    "pluginClass":"com.dp.mnemonicutils.sensors.MnemonicSensorsDummyEntityScript"
   },
+  "MS_CUSTOM_ENTITY_GM9P":{
+    "defaultName":"GATE_MARKER", # used if name=null in addCustomEntity()
+    "defaultRadius":1, # used if radius<0 in addCustomEntity(),
+    "icon": "graphics/icons/gate0.png",
+    "iconWidth":100,
+    "iconHeight":100,
+    "renderShadow":false, #true,
+    "useLightColor":true,
+    "showInCampaign":true,
+    "showIconOnMap":true,
+    "showNameOnMap":false,
+    "scaleNameWithZoom":false,
+    "scaleIconWithZoom":true,
+    "layers":[FLEETS], # what layer(s) to render in. See CampaignEngineLayers.java for possible values
+    "pluginClass":"com.dp.mnemonicutils.gates.GateMarkerDummyEntityScript"
+  }
 }

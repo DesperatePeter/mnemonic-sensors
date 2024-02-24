@@ -1,12 +1,10 @@
-package com.dp.mnemonicsensors
+package com.dp.mnemonicutils.sensors
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
-import com.fs.starfarer.api.campaign.CustomCampaignEntityPlugin
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
-import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 class MnemonicSensorsDummyEntityScript: BaseCustomEntityPlugin() {
     private var script: MnemonicSensorsEveryFrameScript? = null
