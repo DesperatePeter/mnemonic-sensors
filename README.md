@@ -1,15 +1,36 @@
-# Mnemonic Sensors
+# Mnemonic Utils
 
-![preview](imgs/mnemonic_sensors.gif)
+A collection of quality of life improvements for exploration. Each feature can be individually turned on/off via 
+LunaSettings.
 
-A Starsector mod that marks known sensor signatures with a circle, making it easier to identify that a sensor ping is just
-a cargo pod full of metal that you left behind rather than some shiny loot.
+# Features
 
-## Changelog
+## Mnemonic Sensors
 
-- 0.1.0: initial release
-- 0.1.1: fix issue with circles showing in GUIs, prettier circles
-- 0.2.0: add different colors for different object types
-- 0.2.1: fix circles being rendered above fleet screens
-- 0.2.2: fix issue with additional circles when loading game, add removal mode
-- 0.2.3: hopefully fix potential issue with settings file loading
+![mnemonic_sensors](imgs/mnemonic_sensors.gif)
+
+Marks known sensor signatures with a circle, making it easier to identify that a sensor blip is just 
+a cargo pod full of metal that you left behind rather than some shiny loot or hostile fleet.
+
+## Gate Markers
+
+![gate_markers](imgs/gate_markers.png)
+
+Indicate systems that have a gate with a marker on the star map to make route-planning easier. 
+
+## Trash Disposal
+
+![trash_disposal](imgs/trash_disposal.png)
+
+Removes low-value commodities, such as ore, from the loot screen when your cargo bays are close to full. 
+Fully customizable via LunaSettings.
+
+## Grid-less system maps
+
+![grid_less](imgs/gridless_system_map.png)
+
+Remove the grid from system maps, making it easier to spot things. Feature was pitched and implemented by Genir, 
+many thanks to Genir for contributing it to this mod!
+
+
+
