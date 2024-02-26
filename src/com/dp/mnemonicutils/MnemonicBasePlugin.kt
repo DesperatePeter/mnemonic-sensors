@@ -11,8 +11,7 @@ import com.thoughtworks.xstream.XStream
 
 class MnemonicBasePlugin : BaseModPlugin() {
     override fun beforeGameSave() {
-        cleanSave()
-        setSystemGridLineWidth(null)
+        cleanFeatures()
         super.beforeGameSave()
     }
 
@@ -21,7 +20,8 @@ class MnemonicBasePlugin : BaseModPlugin() {
         super.afterGameSave()
     }
 
-    private fun cleanSave(){
+    private fun cleanFeatures(){
+        setSystemGridLineWidth(null)
         while(Global.getSector().listenerManager.hasListenerOfClass(TrashDisposalListener::class.java))
             Global.getSector().listenerManager.removeListenerOfClass(TrashDisposalListener::class.java)
         while(Global.getSector().listenerManager.hasListenerOfClass(GateMarkerGenerator::class.java))
@@ -45,6 +45,7 @@ class MnemonicBasePlugin : BaseModPlugin() {
                 Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
             }
         }
+        GateMarkerGenerator.updateGateMarkers()
     }
 
     override fun onGameLoad(newGame: Boolean) {
@@ -54,7 +55,11 @@ class MnemonicBasePlugin : BaseModPlugin() {
 
     override fun onApplicationLoad() {
         if(LunaSettingHandler.isLunaLibPresent){
-            addLunaSettingListener { loadLunaSettings() }
+            addLunaSettingListener {
+                loadLunaSettings()
+                cleanFeatures()
+                enableFeatures()
+            }
         }
         super.onApplicationLoad()
     }

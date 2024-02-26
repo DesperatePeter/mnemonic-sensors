@@ -24,11 +24,11 @@ val modFolderName = modName.replace(" ", "-")
 /** Set below to `true` to automatically create mod_info.json and Version Checker files. */
 val shouldAutomaticallyCreateMetadataFiles = true
 // Then, if above is set to true, update the rest of the information below in SECTION B.
-val modVersion = "0.1.2"
+val modVersion = "0.1.3"
 val jarFileName = "${modName.replace(" ", "-")}.jar"
 val modId = "dp_mnemonic_utils"
 val modAuthor = "DesperatePeter"
-val modDescription = "Offers exploration utility features, such as marking known sensor traces and gates or filtering out worthless loot"
+val modDescription = "Offers exploration utility features, such as marking known sensor traces and gates or filtering out worthless loot. Check LunaSettings for details."
 val gameVersion = "0.97a"
 val jars = arrayOf("jars/$jarFileName")
 val modPlugin = "com.dp.mnemonicutils.MnemonicBasePlugin"

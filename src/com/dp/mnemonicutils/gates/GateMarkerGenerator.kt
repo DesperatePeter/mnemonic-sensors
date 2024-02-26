@@ -38,28 +38,34 @@ class GateMarkerGenerator: CurrentLocationChangedListener {
                 it.containingLocation.removeEntity(it)
             }
         }
+
+        private fun spawnGateMarker(system: StarSystemAPI){
+            val spriteRadius = when(system.type){
+                StarSystemGenerator.StarSystemType.SINGLE -> 80f
+                StarSystemGenerator.StarSystemType.BINARY_CLOSE -> 100f
+                StarSystemGenerator.StarSystemType.BINARY_FAR -> 120f
+                StarSystemGenerator.StarSystemType.NEBULA -> 150f
+                else -> 120f
+            }
+            val entity = Global.getSector().hyperspace?.addCustomEntity(system.name + "_marker", "System with Gate",
+                ENTITY_ID, Factions.INDEPENDENT, 1f, spriteRadius, spriteRadius)
+            entity?.setFixedLocation(system.location.x, system.location.y)
+        }
+
+        fun updateGateMarkers(){
+            if(!MnemonicSettings.shouldMarkGates) return
+            cleanGateMarkers()
+            knownSystemsWithGates.forEach {
+                spawnGateMarker(it)
+            }
+        }
+
     }
 
     override fun reportCurrentLocationChanged(prev: LocationAPI?, curr: LocationAPI?) {
-        if(!MnemonicSettings.shouldMarkGates) return
-        cleanGateMarkers()
-        knownSystemsWithGates.forEach {
-            spawnGateMarker(it)
-        }
+        updateGateMarkers()
     }
 
-    private fun spawnGateMarker(system: StarSystemAPI){
-        val spriteRadius = when(system.type){
-            StarSystemGenerator.StarSystemType.SINGLE -> 80f
-            StarSystemGenerator.StarSystemType.BINARY_CLOSE -> 100f
-            StarSystemGenerator.StarSystemType.BINARY_FAR -> 120f
-            StarSystemGenerator.StarSystemType.NEBULA -> 150f
-            else -> 120f
-        }
-        val entity = Global.getSector().hyperspace?.addCustomEntity(system.name + "_marker", "System with Gate",
-            ENTITY_ID, Factions.INDEPENDENT, 1f, spriteRadius, spriteRadius)
-        entity?.setFixedLocation(system.location.x, system.location.y)
-    }
 
 
 
