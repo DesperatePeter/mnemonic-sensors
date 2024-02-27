@@ -7,7 +7,7 @@ ms_enableGridRemoval,Enable Grid Removal,Boolean,true,,"Set to true to remove th
 ms_enableGateMarks,Enable Gate Map Markers,Boolean,true,,"Set to true to mark systems that have gates on the star map (when not in Starscape view). Only activates after unlocking gate travel.",,,
 ,,,,,,,,
 ms_cheatsHeader,MS Cheats Header,Header,Cheats,,,,,
-ms_activateGates,Activate Gates,Boolean,false,,"Set to true to activate gate travel for the player, allowing you to skip the main quest. NOTE: THIS IS NOT REVERSIBLE!",,,
+ms_activateGates,Activate Gates,Boolean,false,,"Set to true to activate gate travel for the player, allowing you to skip the main quest. Has not yet been tested thoroughly. NOTE: THIS IS NOT REVERSIBLE! ",,,
 ,,,,,,,,
 ms_trashDisposalHeader,Trash Disposal Header,Header,Trash Disposal,,,,,Trash Disposal
 ms_trashDisposalText,Trash Disposal Text,Text,"Trash Disposal will remove low-value loot from salvage screens.

@@ -1,5 +1,9 @@
 === For Starsector 0.97a ===
 
+- 0.2.0:
+feat: added option to force enable gate travel for the player, allowing you to skip the main quest.
+I know this has already been implemented in other mods, but it is easy enough to implement and kind of fits the mod.
+
 - 0.1.3:
 fix: gate markers now get re-applied after saving without changing maps
 feat: changed settings now apply instantly without saving
