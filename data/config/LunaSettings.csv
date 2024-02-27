@@ -4,21 +4,24 @@ ms_enabledFeaturesText,Enabled Features Text,Text,"Enable/disable entire feature
 ms_enableMnemonicSensors,Enable Mnemonic Sensors,Boolean,true,,"Mark known sensor signatures.",,,
 ms_enableTrashDisposal,Enable Trash Disposal,Boolean,true,,"Set to false to disable the entire Trash Disposal feature.",,,
 ms_enableGridRemoval,Enable Grid Removal,Boolean,true,,"Set to true to remove the square grid in system maps. Feature implemented by Genir, all credits and many thanks to him!",,,
-ms_enableGateMarks,Enable Gate Map Markers,Boolean,true,,"Set to true to mark systems that have gates on the star map. Only activates after unlocking gate travel.",,,
+ms_enableGateMarks,Enable Gate Map Markers,Boolean,true,,"Set to true to mark systems that have gates on the star map (when not in Starscape view). Only activates after unlocking gate travel.",,,
 ,,,,,,,,
-ms_trashDisposalHeader,Trash Disposal Header,Header,Trash Disposal,,,,,
+ms_cheatsHeader,MS Cheats Header,Header,Cheats,,,,,
+ms_activateGates,Activate Gates,Boolean,false,,"Set to true to activate gate travel for the player, allowing you to skip the main quest. NOTE: THIS IS NOT REVERSIBLE!",,,
+,,,,,,,,
+ms_trashDisposalHeader,Trash Disposal Header,Header,Trash Disposal,,,,,Trash Disposal
 ms_trashDisposalText,Trash Disposal Text,Text,"Trash Disposal will remove low-value loot from salvage screens.
 
 By default, ore always gets removed. Medium-value commodities such as metals only gets removed if your cargo holds are almost full.
 
 You can choose for each cargo type whether you want to always remove it, only remove it when your cargo is (almost) full or to never remove it.
 
-When you set a commodity to CargoFull, the portion that would bring you over the CargoPercentage will get removed.",,"",,,
-ms_cargoPercentage,Cargo Percentage,Int,90,,"Consider cargo bays to be full when used cargo space is higher than N percent",0,100,
-ms_filterOre,Remove Ore,Radio,"Always","Always,CargoFull,Never","Value: 10 Credits",,,
-ms_filterRareOre,Remove Transplutonic Ore,Radio,"Never","Always,CargoFull,Never","Value: 75 Credits",,,
-ms_filterMetals,Remove Metals,Radio,"CargoFull","Always,CargoFull,Never","Value: 30 Credits",,,
-ms_filterFood,Remove Food,Radio,"CargoFull","Always,CargoFull,Never","Value: 20 Credits",,,
-ms_filterOrganics,Remove Organics,Radio,"CargoFull","Always,CargoFull,Never","Value: 30 Credits",,,
-ms_filterDomesticGoods,Remove Domestic Goods,Radio,"CargoFull","Always,CargoFull,Never","Value: 50 Credits",,,
-ms_filterExcessFuel,Remove Excess Fuel,Boolean,false,,"Remove any fuel that would exceed your fuel capacity from loot",,
+When you set a commodity to CargoFull, the portion that would bring you over the CargoPercentage will get removed.",,"",,,Trash Disposal
+ms_cargoPercentage,Cargo Percentage,Int,90,,"Consider cargo bays to be full when used cargo space is higher than N percent",0,100,Trash Disposal
+ms_filterOre,Remove Ore,Radio,"Always","Always,CargoFull,Never","Value: 10 Credits",,,Trash Disposal
+ms_filterRareOre,Remove Transplutonic Ore,Radio,"Never","Always,CargoFull,Never","Value: 75 Credits",,,Trash Disposal
+ms_filterMetals,Remove Metals,Radio,"CargoFull","Always,CargoFull,Never","Value: 30 Credits",,,Trash Disposal
+ms_filterFood,Remove Food,Radio,"CargoFull","Always,CargoFull,Never","Value: 20 Credits",,,Trash Disposal
+ms_filterOrganics,Remove Organics,Radio,"CargoFull","Always,CargoFull,Never","Value: 30 Credits",,,Trash Disposal
+ms_filterDomesticGoods,Remove Domestic Goods,Radio,"CargoFull","Always,CargoFull,Never","Value: 50 Credits",,,Trash Disposal
+ms_filterExcessFuel,Remove Excess Fuel,Boolean,false,,"Remove any fuel that would exceed your fuel capacity from loot",,,Trash Disposal

@@ -1,6 +1,7 @@
 package com.dp.mnemonicutils
 
 import com.dp.mnemonicutils.gates.GateMarkerGenerator
+import com.dp.mnemonicutils.gates.enableGates
 import com.dp.mnemonicutils.sensors.MnemonicSensorsEveryFrameScript
 import com.dp.mnemonicutils.settings.*
 import com.dp.mnemonicutils.trashdisposal.TrashDisposalListener
@@ -44,6 +45,9 @@ class MnemonicBasePlugin : BaseModPlugin() {
             if(!Global.getSector().listenerManager.hasListenerOfClass(MnemonicSensorsEveryFrameScript::class.java)){
                 Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
             }
+        }
+        if(MnemonicSettings.activateGates()){
+            enableGates()
         }
         GateMarkerGenerator.updateGateMarkers()
     }

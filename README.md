@@ -16,7 +16,7 @@ a cargo pod full of metal that you left behind rather than some shiny loot or ho
 
 ![gate_markers](imgs/gate_markers.png)
 
-Indicate systems that have a gate with a marker on the star map to make route-planning easier. 
+Indicate systems that have a gate with a marker on the star map (when not in Starscape view) to make route-planning easier. 
 
 ## Trash Disposal
 
