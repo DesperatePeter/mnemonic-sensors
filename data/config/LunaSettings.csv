@@ -3,7 +3,13 @@ ms_enabledFeaturesHeader,MS Header,Header,Enabled Features,,,,,
 ms_enabledFeaturesText,Enabled Features Text,Text,"Enable/disable entire features.",,"",,,
 ms_enableMnemonicSensors,Enable Mnemonic Sensors,Boolean,true,,"Mark known sensor signatures.",,,
 ms_enableTrashDisposal,Enable Trash Disposal,Boolean,true,,"Set to false to disable the entire Trash Disposal feature.",,,
-ms_enableGridRemoval,Enable Grid Removal,Boolean,true,,"Set to true to remove the square grid in system maps. Feature implemented by Genir, all credits and many thanks to him!",,,
+ms_enableGridRemoval,Enable Grid Removal,Boolean,true,,"Set to true to remove the square grid in system maps.
+
+Note: This feature might conflict with mods that change system backgrounds, such as Seeker. It won't crash or anything, just interfere with their backgrounds.
+
+Restoring the desired backgrounds might require disablind this feature, saving the game and then restarting Starsector.
+
+Feature implemented by Genir, all credits and many thanks to him!",,,
 ms_enableGateMarks,Enable Gate Map Markers,Boolean,true,,"Set to true to mark systems that have gates on the star map (when not in Starscape view). Only activates after unlocking gate travel.",,,
 ,,,,,,,,
 ms_cheatsHeader,MS Cheats Header,Header,Cheats,,,,,
@@ -25,3 +31,8 @@ ms_filterFood,Remove Food,Radio,"CargoFull","Always,CargoFull,Never","Value: 20 
 ms_filterOrganics,Remove Organics,Radio,"CargoFull","Always,CargoFull,Never","Value: 30 Credits",,,Trash Disposal
 ms_filterDomesticGoods,Remove Domestic Goods,Radio,"CargoFull","Always,CargoFull,Never","Value: 50 Credits",,,Trash Disposal
 ms_filterExcessFuel,Remove Excess Fuel,Boolean,false,,"Remove any fuel that would exceed your fuel capacity from loot",,,Trash Disposal
+ms_mnemonicSensorsHeader,Mnemonic Sensors Header,Header,Mnemonic Sensors,,,,,Mnemonic Sensors
+ms_enableSensorsOnMiniRadar,Show on Mini Radar,Boolean,true,,"If set to true, sensor blip outlines will be shown on the mini radar",,,Mnemonic Sensors
+ms_enableSensorsOnScreen,Show on Screen,Boolean,true,,"If set to true, sensor blip outlines will be shown on the main screen",,,Mnemonic Sensors
+ms_sensorsCargoPodColor,Cargo Pod Color,Color,#cccc3d,,"Color for marking cargo pods",,,Mnemonic Sensors
+ms_sensorsMiscColor,Misc Color,Color,#595959,,"Color for marking everything that is neither cargo pod nor fleet",,,Mnemonic Sensors

@@ -22,7 +22,7 @@ class MnemonicBasePlugin : BaseModPlugin() {
     }
 
     private fun cleanFeatures(){
-        setSystemGridLineWidth(null)
+        // setSystemGridLineWidth(null)
         while(Global.getSector().listenerManager.hasListenerOfClass(TrashDisposalListener::class.java))
             Global.getSector().listenerManager.removeListenerOfClass(TrashDisposalListener::class.java)
         while(Global.getSector().listenerManager.hasListenerOfClass(GateMarkerGenerator::class.java))
@@ -61,6 +61,10 @@ class MnemonicBasePlugin : BaseModPlugin() {
         if(LunaSettingHandler.isLunaLibPresent){
             addLunaSettingListener {
                 loadLunaSettings()
+                if(MnemonicSettings.wasGridRemoval && !MnemonicSettings.enableGridRemoval()){
+                    setSystemGridLineWidth(null)
+                }
+                MnemonicSettings.wasGridRemoval = MnemonicSettings.enableGridRemoval()
                 cleanFeatures()
                 enableFeatures()
             }

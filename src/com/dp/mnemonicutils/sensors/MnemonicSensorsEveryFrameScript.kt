@@ -1,5 +1,6 @@
 package com.dp.mnemonicutils.sensors
 
+import com.dp.mnemonicutils.settings.MnemonicSettings
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
@@ -19,7 +20,8 @@ import java.awt.Color
 
 private const val MS_ENTITY_CUSTOM_DATA_KEY = "MS_TMPKEY"
 private const val MS_CUSTOM_ENTITY_CLASS = "MS_CUSTOM_ENTITY_7FGH"
-private const val CIRCLE_POINTS = 50
+private const val CIRCLE_POINTS_MISC = 50
+private const val CIRCLE_POINTS_FLEET = 6
 
 class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
@@ -48,11 +50,18 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
 
     override fun runWhilePaused(): Boolean = true
 
-    private fun determineColor(entity: SectorEntityToken) : Color {
+    private fun determineColor(token: SectorEntityToken) : Color {
         return when{
-            entity is CampaignFleetAPI -> entity.faction?.color ?: Color.BLUE
-            entity.name == "Cargo Pods" -> Color.YELLOW
-            else -> Color.GRAY
+            token is CampaignFleetAPI -> token.faction?.color ?: Color.BLUE
+            token.name == "Cargo Pods" -> MnemonicSettings.cargoPodColor()
+            else ->  MnemonicSettings.miscColor()
+        }
+    }
+
+    private fun determineCirclePoints(entity: SectorEntityToken): Int{
+        return when{
+            entity is CampaignFleetAPI -> CIRCLE_POINTS_FLEET
+            else -> CIRCLE_POINTS_MISC
         }
     }
 
@@ -79,40 +88,47 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
             entity?.radius = 0f
         }
 
-        Global.getSector().playerFleet.containingLocation.allEntities.filterNotNull().filter {
+        playerLocation.allEntities.filterNotNull().filter {
             it.sensorProfile > 0f
                     && (it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_DETAILS
                     || it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_AND_FACTION_DETAILS)
         }.forEach {
             it.customData[MS_ENTITY_CUSTOM_DATA_KEY] = "known"
         }
-        Global.getSector().playerFleet.containingLocation.allEntities.filter {
+        playerLocation.allEntities.filter {
             it.customData.containsKey(MS_ENTITY_CUSTOM_DATA_KEY)
                     && it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.SENSOR_CONTACT
+                    && it.sensorProfile > 0f
         }.forEach {
-
-            val x = toScreenX(it.location.x)
-            val y = toScreenY(it.location.y)
-            locations.add(
-                SensorSignatureFrameData(
-                    x,
-                    y,
-                    it.radius / vp.viewMult * uiMult,
-                    determineColor(it),
-                    CampaignEngineLayers.FLEETS
-                )
-            )
-            toCompassPos(it.location)?.let { cl ->
+            if(MnemonicSettings.enableSensorsOnScreen()){
+                val x = toScreenX(it.location.x)
+                val y = toScreenY(it.location.y)
                 locations.add(
                     SensorSignatureFrameData(
-                        cl.x,
-                        cl.y,
-                        compassObjRadius,
+                        x,
+                        y,
+                        it.radius / vp.viewMult * uiMult,
                         determineColor(it),
-                        CampaignEngineLayers.ABOVE
+                        CampaignEngineLayers.FLEETS,
+                        determineCirclePoints(it)
                     )
                 )
             }
+            if(MnemonicSettings.enableSensorsOnMiniRadar()){
+                toCompassPos(it.location)?.let { cl ->
+                    locations.add(
+                        SensorSignatureFrameData(
+                            cl.x,
+                            cl.y,
+                            compassObjRadius,
+                            determineColor(it),
+                            CampaignEngineLayers.ABOVE,
+                            determineCirclePoints(it)
+                        )
+                    )
+                }
+            }
+
         }
         render(CampaignEngineLayers.ABOVE, null)
     }
@@ -143,7 +159,7 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
                 it.color.blue.toFloat() / 255f,
                 0.6f
             )
-            DrawUtils.drawCircle(it.x, it.y, it.r, CIRCLE_POINTS, false)
+            DrawUtils.drawCircle(it.x, it.y, it.r, it.circlePoints, false)
         }
 
         GL11.glDisable(GL11.GL_BLEND)
