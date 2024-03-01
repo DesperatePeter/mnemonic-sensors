@@ -7,6 +7,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignEngineLayers
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI
+import com.fs.starfarer.api.campaign.LocationAPI
 import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.combat.ViewportAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
@@ -34,11 +35,16 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
         val compassScreenRadius = 87f * uiMult
         val compassObjRadius = 5f * uiMult
 
-        fun cleanEntity(){
-            Global.getSector()?.playerFleet?.containingLocation?.allEntities?.firstOrNull {
+        fun cleanEntities(){
+            Global.getSector()?.hyperspace?.allEntities?.filter {
                 it.customEntityType == MS_CUSTOM_ENTITY_CLASS
-            }?.let {
+            }?.forEach {
                 Global.getSector()?.playerFleet?.containingLocation?.removeEntity(it)
+            }
+            Global.getSector()?.starSystems?.map { it.allEntities }?.flatten()?.filter {
+                it.customEntityType == MS_CUSTOM_ENTITY_CLASS
+            }?.forEach {
+                it?.containingLocation?.removeEntity(it)
             }
         }
     }
@@ -69,6 +75,40 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
         if (Global.getCurrentState() != GameState.CAMPAIGN) return
         locations.clear()
         val playerLocation = Global.getSector()?.playerFleet?.containingLocation ?: return
+        if(MnemonicSettings.disableSensorsHyperspace() && playerLocation.isHyperspace) return
+
+        reInitializeEntityIfApplicable(playerLocation)
+
+        markKnownEntities(playerLocation)
+
+        addRenderLocations(playerLocation)
+
+        // render icons on the mini radar. As this layer isn't called for the entities render-method, call it here
+        render(CampaignEngineLayers.ABOVE, null)
+    }
+
+    private fun reInitializeEntityIfApplicable(playerLocation: LocationAPI){
+        if (entity?.containingLocation != playerLocation){
+            entity?.containingLocation?.removeEntity(entity)
+            entity = playerLocation.addCustomEntity("ms_hacky_id", "NONE",
+                MS_CUSTOM_ENTITY_CLASS,
+                Factions.INDEPENDENT, this)
+            entity?.setFixedLocation(-10000f, -10000f)
+            entity?.radius = 0f
+        }
+    }
+
+    private fun markKnownEntities(playerLocation: LocationAPI){
+        playerLocation.allEntities.filterNotNull().filter {
+            it.sensorProfile > 0f
+                    && (it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_DETAILS
+                    || it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_AND_FACTION_DETAILS)
+        }.forEach {
+            it.customData[MS_ENTITY_CUSTOM_DATA_KEY] = "known"
+        }
+    }
+
+    private fun addRenderLocations(playerLocation: LocationAPI){
         val pfLoc = Global.getSector()?.playerFleet?.location ?: return
         val vp = Global.getSector()?.viewport ?: return
         val toScreenX = { x: Float -> (vp.convertWorldXtoScreenX(x)) / vp.visibleWidth * Global.getSettings().screenWidthPixels * vp.viewMult  }
@@ -79,26 +119,10 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
             relPos.scale(compassScreenRadius/ COMPASS_WORLD_RADIUS)
             return relPos + compassScreenCenter
         }
-        if (entity?.containingLocation != playerLocation){
-            entity?.containingLocation?.removeEntity(entity)
-            entity = playerLocation.addCustomEntity("ms_hacky_id", "NONE",
-                MS_CUSTOM_ENTITY_CLASS,
-                Factions.INDEPENDENT, this)
-            entity?.setFixedLocation(-10000f, -10000f)
-            entity?.radius = 0f
-        }
-
-        playerLocation.allEntities.filterNotNull().filter {
-            it.sensorProfile > 0f
-                    && (it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_DETAILS
-                    || it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.COMPOSITION_AND_FACTION_DETAILS)
-        }.forEach {
-            it.customData[MS_ENTITY_CUSTOM_DATA_KEY] = "known"
-        }
         playerLocation.allEntities.filter {
             it.customData.containsKey(MS_ENTITY_CUSTOM_DATA_KEY)
                     && it.visibilityLevelToPlayerFleet == SectorEntityToken.VisibilityLevel.SENSOR_CONTACT
-                    && it.sensorProfile > 0f
+            // && it.sensorProfile > 0f
         }.forEach {
             if(MnemonicSettings.enableSensorsOnScreen()){
                 val x = toScreenX(it.location.x)
@@ -130,8 +154,8 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
             }
 
         }
-        render(CampaignEngineLayers.ABOVE, null)
     }
+
     fun render(layer: CampaignEngineLayers?, viewport: ViewportAPI?){
         if(locations.isEmpty()) return
         if(Global.getSector().campaignUI.isShowingDialog || Global.getSector().campaignUI.isShowingMenu) return

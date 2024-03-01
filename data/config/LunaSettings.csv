@@ -36,3 +36,4 @@ ms_enableSensorsOnMiniRadar,Show on Mini Radar,Boolean,true,,"If set to true, se
 ms_enableSensorsOnScreen,Show on Screen,Boolean,true,,"If set to true, sensor blip outlines will be shown on the main screen",,,Mnemonic Sensors
 ms_sensorsCargoPodColor,Cargo Pod Color,Color,#cccc3d,,"Color for marking cargo pods",,,Mnemonic Sensors
 ms_sensorsMiscColor,Misc Color,Color,#595959,,"Color for marking everything that is neither cargo pod nor fleet",,,Mnemonic Sensors
+ms_disableSensorsHyperspace,Disable in Hyperspace,Boolean,false,,"If set to true, Mnemonic Sensors will be disabled while in hyperspace. Set to true if you are experiencing performance issues.",,,Mnemonic Sensors

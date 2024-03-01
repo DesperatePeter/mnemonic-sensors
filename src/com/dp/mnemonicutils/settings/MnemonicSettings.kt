@@ -25,6 +25,7 @@ object MnemonicSettings{
     val enableSensorsOnScreen = LunaSettingHandler("enableSensorsOnScreen", true)
     val cargoPodColor = LunaSettingHandler("sensorsCargoPodColor", Color.YELLOW)
     val miscColor = LunaSettingHandler("sensorsMiscColor", Color.GRAY)
+    val disableSensorsHyperspace = LunaSettingHandler("disableSensorsHyperspace", false)
 
 
     private fun amountByType(type: CargoEnumSettingHandler.Companion.CargoRemovalType, freeSpace: Float): Float{

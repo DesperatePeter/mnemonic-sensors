@@ -9,7 +9,6 @@ import com.fs.starfarer.api.impl.campaign.BaseCustomEntityPlugin
 
 class MnemonicSensorsDummyEntityScript: BaseCustomEntityPlugin() {
     private var script: MnemonicSensorsEveryFrameScript? = null
-    private var entity: SectorEntityToken? = null
     override fun init(entity: SectorEntityToken?, params: Any?) {
         script = params as? MnemonicSensorsEveryFrameScript
         this.entity = entity

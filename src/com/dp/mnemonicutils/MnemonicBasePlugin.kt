@@ -28,21 +28,21 @@ class MnemonicBasePlugin : BaseModPlugin() {
         while(Global.getSector().listenerManager.hasListenerOfClass(GateMarkerGenerator::class.java))
             Global.getSector().listenerManager.removeListenerOfClass(GateMarkerGenerator::class.java)
         GateMarkerGenerator.cleanGateMarkers()
-        MnemonicSensorsEveryFrameScript.cleanEntity()
+        MnemonicSensorsEveryFrameScript.cleanEntities()
     }
 
     private fun enableFeatures(){
-        if(MnemonicSettings.enableTrashDisposal()){
+        if(MnemonicSettings.enableTrashDisposal() && !Global.getSector().listenerManager.hasListenerOfClass(TrashDisposalListener::class.java)){
             Global.getSector().listenerManager.addListener(TrashDisposalListener)
         }
-        if(MnemonicSettings.enableGateMarkings()){
+        if(MnemonicSettings.enableGateMarkings() && !Global.getSector().listenerManager.hasListenerOfClass(GateMarkerGenerator::class.java)){
             Global.getSector().listenerManager.addListener(GateMarkerGenerator())
         }
         if(MnemonicSettings.enableGridRemoval()){
             setSystemGridLineWidth(0f)
         }
         if(MnemonicSettings.enableMnemonicSensors()){
-            if(!Global.getSector().listenerManager.hasListenerOfClass(MnemonicSensorsEveryFrameScript::class.java)){
+            if(!Global.getSector().hasTransientScript(MnemonicSensorsEveryFrameScript::class.java)){
                 Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
             }
         }

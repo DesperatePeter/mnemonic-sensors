@@ -5,6 +5,7 @@ feat: improve gate marker icon. All credits and many thanks to Tesser for provid
 feat: Fleets now get a hexagon instead of a circle for mnemonic sensors to make it easier to tell fleets apart from other stuff.
 fix: Issue where the grid removal feature would interfere with some other mods setting backgrounds, even when disabled
 feat: additional settings for mnemonic sensors
+(hopefully) fix: Rare issue where mnemonic sensor markings would get stuck on screen.
 
 
 - 0.2.0:
