@@ -2,13 +2,13 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/DesperatePeter/mnemonic-sensors/master/dp_mnemonic_utils.version",
     "modName":"MnemonicUtils",
-    "modThreadId":25328,
+    "modThreadId":29517,
     "modVersion":
     {
         "major":0,
         "minor":3,
         "patch":0
     },
-    "directDownloadURL": "https://github.com/DesperatePeter/mnemonic-sensors/releases/download/0.3.0/MnemonicUtils-0.3.0.zip",
+    "directDownloadURL": "https://github.com/DesperatePeter/mnemonic-sensors/releases/download/v0.3.0/MnemonicUtils-v0.3.0.zip",
     "changelogURL": "https://raw.githubusercontent.com/DesperatePeter/mnemonic-sensors/master/changelog.txt"
 }
