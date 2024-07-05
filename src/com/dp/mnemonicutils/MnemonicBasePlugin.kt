@@ -11,6 +11,12 @@ import com.thoughtworks.xstream.XStream
 
 
 class MnemonicBasePlugin : BaseModPlugin() {
+
+    companion object{
+        var pptWarningBaseValue = 30
+        const val PPT_WARN_KEY = "peakTimeWarningSeconds"
+    }
+
     override fun beforeGameSave() {
         cleanFeatures()
         super.beforeGameSave()
@@ -29,6 +35,7 @@ class MnemonicBasePlugin : BaseModPlugin() {
             Global.getSector().listenerManager.removeListenerOfClass(GateMarkerGenerator::class.java)
         GateMarkerGenerator.cleanGateMarkers()
         MnemonicSensorsEveryFrameScript.cleanEntities()
+        Global.getSettings().setFloat(PPT_WARN_KEY, pptWarningBaseValue.toFloat())
     }
 
     private fun enableFeatures(){
@@ -46,6 +53,9 @@ class MnemonicBasePlugin : BaseModPlugin() {
                 Global.getSector().addTransientScript(MnemonicSensorsEveryFrameScript())
             }
         }
+        if(MnemonicSettings.disablePPTWarningSound()){
+            Global.getSettings().setFloat(PPT_WARN_KEY, -10000f)
+        }
         if(MnemonicSettings.activateGates()){
             enableGates()
         }
@@ -58,6 +68,7 @@ class MnemonicBasePlugin : BaseModPlugin() {
     }
 
     override fun onApplicationLoad() {
+        pptWarningBaseValue = Global.getSettings().getInt(PPT_WARN_KEY)
         if(LunaSettingHandler.isLunaLibPresent){
             addLunaSettingListener {
                 loadLunaSettings()

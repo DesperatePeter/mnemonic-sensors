@@ -11,6 +11,7 @@ object MnemonicSettings{
     var wasGridRemoval = enableGridRemoval()
     val enableGateMarkings = LunaSettingHandler("enableGateMarks", true)
     val activateGates = LunaSettingHandler("activateGates", false)
+    val disablePPTWarningSound = LunaSettingHandler("disablePPTSound", false)
     val shouldMarkGates: Boolean
         get() = enableGateMarkings() && Global.getSector()?.memoryWithoutUpdate?.get(GateEntityPlugin.GATES_ACTIVE) == true
     val filterExcessFuel = LunaSettingHandler("filterExcessFuel", false)
@@ -26,6 +27,7 @@ object MnemonicSettings{
     val cargoPodColor = LunaSettingHandler("sensorsCargoPodColor", Color.YELLOW)
     val miscColor = LunaSettingHandler("sensorsMiscColor", Color.GRAY)
     val disableSensorsHyperspace = LunaSettingHandler("disableSensorsHyperspace", false)
+
 
 
     private fun amountByType(type: CargoEnumSettingHandler.Companion.CargoRemovalType, freeSpace: Float): Float{
