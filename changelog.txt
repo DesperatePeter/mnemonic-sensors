@@ -1,5 +1,10 @@
 === For Starsector 0.97a ===
 
+- 0.4.0:
+fix: direct download link for lunalib mod updater and forum thread ID
+feat: Add Garage for Rent feature, that allows you to park your fleet at your colonies to pass time
+feat: add option to disable the warning about PPT being at 30s
+
 - 0.3.0:
 feat: improve gate marker icon. All credits and many thanks to Tesser for providing the new icon sprite!
 feat: Fleets now get a hexagon instead of a circle for mnemonic sensors to make it easier to tell fleets apart from other stuff.

@@ -1,0 +1,5 @@
+id,trigger,conditions,script,text,options,notes
+gfs_spawn_garage_event,AddBarEvents,GFSCanPark,"AddBarEvent gfs_garage ""Approach the guy offering to let you use his garage to park your fleet. Only 1 credit per day!"" ""Someone seems to have a large garage available.""",,,
+gfs_spawn_garage_event2,AddBarEvents,GFSCanUnpark,"AddBarEvent gfs_garage ""Retrieve your fleet from the garage"" ""Your fleet is currently stored in the garage.""",,,
+gfs_garage,DialogOptionSelected,$option == gfs_garage,FleetGarage,,1:gfs_leave:Leave
+gfs_leave,DialogOptionSelected,$option == gfs_leave,BarCMD returnFromEvent false,"You nod to the totally legit businessman and leave.",,

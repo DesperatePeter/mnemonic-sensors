@@ -1,0 +1,2 @@
+command,class,tags,syntax,help
+gfs_unpark,com.dp.mnemonicutils.garage.UnparkConsoleCommand,"campaign",gfs_unpark,"Removes your fleet from the garage, resuming normal operation. This command exists in case you cannot access the bar for some reason."

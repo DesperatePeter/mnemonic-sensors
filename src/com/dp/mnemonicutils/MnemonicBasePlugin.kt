@@ -1,5 +1,7 @@
 package com.dp.mnemonicutils
 
+import com.dp.mnemonicutils.garage.GarageCampaignPlugin
+import com.dp.mnemonicutils.garage.rulecmd.FleetGarage
 import com.dp.mnemonicutils.gates.GateMarkerGenerator
 import com.dp.mnemonicutils.gates.enableGates
 import com.dp.mnemonicutils.sensors.MnemonicSensorsEveryFrameScript
@@ -10,6 +12,7 @@ import com.fs.starfarer.api.Global
 import com.thoughtworks.xstream.XStream
 
 
+
 class MnemonicBasePlugin : BaseModPlugin() {
 
     companion object{
@@ -18,6 +21,11 @@ class MnemonicBasePlugin : BaseModPlugin() {
     }
 
     override fun beforeGameSave() {
+        if(FleetGarage.isParked()){
+            FleetGarage.unparkFleet()
+            Global.getSector().campaignUI?.addMessage("Oh, I see you like to dabble in reality altering quantum magic!")
+            Global.getSector().campaignUI?.addMessage("Allow me to remove your fleet from the garage, lest we create a time paradox!")
+        }
         cleanFeatures()
         super.beforeGameSave()
     }
@@ -28,7 +36,6 @@ class MnemonicBasePlugin : BaseModPlugin() {
     }
 
     private fun cleanFeatures(){
-        // setSystemGridLineWidth(null)
         while(Global.getSector().listenerManager.hasListenerOfClass(TrashDisposalListener::class.java))
             Global.getSector().listenerManager.removeListenerOfClass(TrashDisposalListener::class.java)
         while(Global.getSector().listenerManager.hasListenerOfClass(GateMarkerGenerator::class.java))
@@ -36,6 +43,7 @@ class MnemonicBasePlugin : BaseModPlugin() {
         GateMarkerGenerator.cleanGateMarkers()
         MnemonicSensorsEveryFrameScript.cleanEntities()
         Global.getSettings().setFloat(PPT_WARN_KEY, pptWarningBaseValue.toFloat())
+        Global.getSector().unregisterPlugin(GarageCampaignPlugin.ID)
     }
 
     private fun enableFeatures(){
@@ -60,6 +68,9 @@ class MnemonicBasePlugin : BaseModPlugin() {
             enableGates()
         }
         GateMarkerGenerator.updateGateMarkers()
+        if(MnemonicSettings.enableGarage()){
+            Global.getSector().registerPlugin(GarageCampaignPlugin())
+        }
     }
 
     override fun onGameLoad(newGame: Boolean) {

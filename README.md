@@ -32,5 +32,18 @@ Fully customizable via LunaSettings.
 Remove the grid from system maps, making it easier to spot things. Feature was pitched and implemented by Genir, 
 many thanks to Genir for contributing it to this mod!
 
+## Garage for rent
+
+![garage](imgs/garage.png)
+
+Adds a bar event to player-owned colonies that lets you store your fleet. While parked, non-quest fleets can't interact 
+with your fleet, you cannot move and supply usage is reduced. This is intended for passing time. Saving while your fleet 
+is parked is not recommended.
+
+If, for some reason, you are ever unable to visit the bar to retrieve your fleet, you can use the console command gfs_unpark.
+
+This feature was requested and sponsored by Mythic.
+
+
 
 

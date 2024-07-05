@@ -14,7 +14,8 @@ ms_enableGateMarks,Enable Gate Map Markers,Boolean,true,,"Set to true to mark sy
 ,,,,,,,,
 ms_cheatsHeader,MS Cheats Header,Header,Cheats,,,,,
 ms_activateGates,Activate Gates,Boolean,false,,"Set to true to activate gate travel for the player, allowing you to skip the main quest. Has not yet been tested thoroughly. NOTE: THIS IS NOT REVERSIBLE! ",,,
-ms_disablePPTSound,Disable PPT warning sound,Boolean,true,,"Set to true to disable the warning sound played when your flagship will soon run out of peak performance time.",,,
+ms_disablePPTSound,Disable PPT warning sound,Boolean,false,,"Set to true to disable the warning sound played when ships will soon run out of peak performance time.",,,
+ms_enableGarage,Enable Garage,Boolean,true,,"If set to true, a legitimate businessman will open up shop at your colonies.",,,
 ,,,,,,,,
 ms_trashDisposalHeader,Trash Disposal Header,Header,Trash Disposal,,,,,Trash Disposal
 ms_trashDisposalText,Trash Disposal Text,Text,"Trash Disposal will remove low-value loot from salvage screens.

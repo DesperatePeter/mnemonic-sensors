@@ -12,6 +12,7 @@ object MnemonicSettings{
     val enableGateMarkings = LunaSettingHandler("enableGateMarks", true)
     val activateGates = LunaSettingHandler("activateGates", false)
     val disablePPTWarningSound = LunaSettingHandler("disablePPTSound", false)
+    val enableGarage = LunaSettingHandler("enableGarage", true)
     val shouldMarkGates: Boolean
         get() = enableGateMarkings() && Global.getSector()?.memoryWithoutUpdate?.get(GateEntityPlugin.GATES_ACTIVE) == true
     val filterExcessFuel = LunaSettingHandler("filterExcessFuel", false)

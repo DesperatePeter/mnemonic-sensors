@@ -1,2 +1,10 @@
 {
+  "ruleCommandPackages": [
+    "com.dp.mnemonicutils.garage.rulecmd"
+  ],
+  "graphics" : {
+    "illustrations" : {
+      "gfs_garage" : "graphics/garage.jpg"
+    }
+  }
 }
