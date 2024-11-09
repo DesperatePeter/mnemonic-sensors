@@ -34,7 +34,7 @@ class FleetIsParkedScript(private val market: MarketAPI): EveryFrameScript {
         }
         val pf = Global.getSector().playerFleet ?: return
         if(pf.containingLocation != market.containingLocation) return
-        val planet = market.planetEntity
+        val planet = market.planetEntity ?: return
         val dx = pf.location - planet.location
         if(dx.length() > market.planetEntity.radius * 0.1f){
             pf.setLocation(planet.location.x, planet.location.y)
