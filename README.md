@@ -44,6 +44,5 @@ If, for some reason, you are ever unable to visit the bar to retrieve your fleet
 
 This feature was requested and sponsored by Mythic.
 
-
-
-
+The image used in the event was generated using [Craiyon](https://craiyon.com). If anyone wants to contribute a 
+human-generated replacement image, that would be much appreciated!
