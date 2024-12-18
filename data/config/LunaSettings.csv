@@ -3,13 +3,14 @@ ms_enabledFeaturesHeader,MS Header,Header,Enabled Features,,,,,
 ms_enabledFeaturesText,Enabled Features Text,Text,"Enable/disable entire features.",,"",,,
 ms_enableMnemonicSensors,Enable Mnemonic Sensors,Boolean,true,,"Mark known sensor signatures.",,,
 ms_enableTrashDisposal,Enable Trash Disposal,Boolean,true,,"Set to false to disable the entire Trash Disposal feature.",,,
-ms_enableGridRemoval,Enable Grid Removal,Boolean,true,,"Set to true to remove the square grid in system maps.
+ms_enableGridRemoval,Enable System Map Grid Removal,Boolean,true,,"Set to true to remove the square grid in system maps.
 
 Note: This feature might conflict with mods that change system backgrounds, such as Seeker. It won't crash or anything, just interfere with their backgrounds.
 
-Restoring the desired backgrounds might require disablind this feature, saving the game and then restarting Starsector.
+Restoring the desired backgrounds might require disabling this feature, saving the game and then restarting Starsector.
 
 Feature implemented by Genir, all credits and many thanks to him!",,,
+ms_enableHyperspaceGridRemoval,Enable Hyperspace Map Grid Removal,Boolean,true,,"Set to true to remove the square grid in hyperspace map.",,,
 ms_enableGateMarks,Enable Gate Map Markers,Boolean,true,,"Set to true to mark systems that have gates on the star map (when not in Starscape view). Only activates after unlocking gate travel.",,,
 ,,,,,,,,
 ms_cheatsHeader,MS Cheats Header,Header,Cheats,,,,,
