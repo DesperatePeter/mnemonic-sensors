@@ -66,12 +66,14 @@ dependencies {
     implementation("net.java.jinput:jinput:2.0.7")
     implementation("org.codehaus.janino:janino:3.0.7")
     implementation("starfarer:starfarer-api:1.0.0") // This grabs local files from the /libs folder, see `repositories` block.
+    implementation(files("$starsectorCoreDirectory/starfarer_obf.jar"))
+    implementation(files("$starsectorCoreDirectory/fs.common_obf.jar"))
 
     // If the above fails, uncomment this line to use the dependencies in starsector-core instead of getting them from The Internet.
     // compileOnly(fileTree(starsectorCoreDirectory) { include("**/*.jar") })
 
     //////////////////////////////////////////
-    // SECTION D.2: MOD DEPENDENCIES (mods that this mods depends on to compile)
+    // SECTION D.2: MOD DEPENDENCIES (mods that this mod depends on to compile)
     // Uses all mods in /mods folder to compile (this does not mean the mod requires them to run).
     // LazyLib is needed to use Kotlin, as it provides the Kotlin Runtime, so ensure that that is in your mods folder.
     // IF IT IS TAKING A VERY LONG TIME to index dependencies, try commenting out this `compileOnly` section (which includes ALL mods you have)

@@ -9,6 +9,7 @@ object MnemonicSettings{
     val enableTrashDisposal = LunaSettingHandler("enableTrashDisposal", true)
     val enableGridRemoval = LunaSettingHandler("enableGridRemoval", true)
     var wasGridRemoval = enableGridRemoval()
+    val enableHyperspaceGridRemoval = LunaSettingHandler("enableHyperspaceGridRemoval", true)
     val enableGateMarkings = LunaSettingHandler("enableGateMarks", true)
     val activateGates = LunaSettingHandler("activateGates", false)
     val disablePPTWarningSound = LunaSettingHandler("disablePPTSound", false)
