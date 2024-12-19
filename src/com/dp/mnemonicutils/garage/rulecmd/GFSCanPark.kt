@@ -1,5 +1,6 @@
 package com.dp.mnemonicutils.garage.rulecmd
 
+import com.dp.mnemonicutils.settings.MnemonicSettings
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin
@@ -22,6 +23,6 @@ class GFSCanPark: BaseCommandPlugin() {
         params: MutableList<Misc.Token>?,
         memoryMap: MutableMap<String, MemoryAPI>?
     ): Boolean {
-        return isPlayerMarket(memoryMap) && hasPlanet(memoryMap) && !FleetGarage.isParked()
+        return isPlayerMarket(memoryMap) && hasPlanet(memoryMap) && !FleetGarage.isParked() && MnemonicSettings.enableGarage()
     }
 }
