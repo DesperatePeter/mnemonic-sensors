@@ -4,10 +4,14 @@ import com.dp.mnemonicutils.garage.GarageCampaignPlugin
 import com.dp.mnemonicutils.garage.rulecmd.FleetGarage
 import com.dp.mnemonicutils.gates.GateMarkerGenerator
 import com.dp.mnemonicutils.gates.enableGates
+import com.dp.mnemonicutils.grid.HyperspaceMapGridScript
+import com.dp.mnemonicutils.grid.Loader
+import com.dp.mnemonicutils.grid.setSystemGridLineWidth
 import com.dp.mnemonicutils.sensors.MnemonicSensorsEveryFrameScript
 import com.dp.mnemonicutils.settings.*
 import com.dp.mnemonicutils.trashdisposal.TrashDisposalListener
 import com.fs.starfarer.api.BaseModPlugin
+import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.thoughtworks.xstream.XStream
 
@@ -55,6 +59,13 @@ class MnemonicBasePlugin : BaseModPlugin() {
         }
         if(MnemonicSettings.enableGridRemoval()){
             setSystemGridLineWidth(0f)
+        }
+        if(MnemonicSettings.enableHyperspaceGridRemoval()){
+            val gridScriptClass = Loader().loadClass(HyperspaceMapGridScript::class.java.name)
+            val sector = Global.getSector()
+            if(!sector.hasTransientScript(gridScriptClass)){
+                sector.addTransientScript(gridScriptClass.newInstance() as EveryFrameScript)
+            }
         }
         if(MnemonicSettings.enableMnemonicSensors()){
             if(!Global.getSector().hasTransientScript(MnemonicSensorsEveryFrameScript::class.java)){

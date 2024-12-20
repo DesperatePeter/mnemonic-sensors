@@ -1,4 +1,4 @@
-package com.dp.mnemonicutils
+package com.dp.mnemonicutils.grid
 
 import com.fs.starfarer.api.Global
 
