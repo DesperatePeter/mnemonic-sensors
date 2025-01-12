@@ -18,6 +18,7 @@ class HyperspaceMapGridScript : EveryFrameScript {
     private val mapClass: Class<*> =
         EventsPanel::class.java.getMethod("getMap").returnType.getMethod("getMap").returnType
 
+    private val getScreenPanel: Method = CampaignState::class.java.getMethod("getScreenPanel")
     private val getDialogType: Method = CampaignState::class.java.getMethod("getDialogType")
     private val getInnerPanel: Method = dialogClass.getMethod("getInnerPanel")
     private val getChildrenCopy: Method = uiPanelClass.getMethod("getChildrenCopy")
@@ -28,16 +29,13 @@ class HyperspaceMapGridScript : EveryFrameScript {
     override fun runWhilePaused(): Boolean = true
 
     override fun advance(dt: Float) {
+        if(!enableHyperspaceGridRemoval()) return
         val campaignState = Global.getSector().campaignUI as CampaignState
-        val screenPanel = campaignState.screenPanel
+        val screenPanel: Any = getScreenPanel.invoke(campaignState) ?: return
 
         // Run only when UI is displayed.
         when {
-            screenPanel == null -> return
-
             getDialogType.invoke(campaignState) == null -> return
-
-            !enableHyperspaceGridRemoval() -> return
         }
 
         iterateUI(screenPanel)
