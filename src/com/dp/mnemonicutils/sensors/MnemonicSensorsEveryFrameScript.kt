@@ -138,7 +138,7 @@ class MnemonicSensorsEveryFrameScript : EveryFrameScript {
                     )
                 )
             }
-            if(MnemonicSettings.enableSensorsOnMiniRadar()){
+            if(MnemonicSettings.enableSensorsOnMiniRadar() && !Global.getSector().campaignUI.isHideUI){
                 toCompassPos(it.location)?.let { cl ->
                     locations.add(
                         SensorSignatureFrameData(
