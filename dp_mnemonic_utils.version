@@ -6,9 +6,9 @@
     "modVersion":
     {
         "major":0,
-        "minor":4,
-        "patch":1
+        "minor":5,
+        "patch":0
     },
-    "directDownloadURL": "https://github.com/DesperatePeter/mnemonic-sensors/releases/download/v0.4.1/MnemonicUtils-v0.4.1.zip",
+    "directDownloadURL": "https://github.com/DesperatePeter/mnemonic-sensors/releases/download/v0.5.0/MnemonicUtils-v0.5.0.zip",
     "changelogURL": "https://raw.githubusercontent.com/DesperatePeter/mnemonic-sensors/master/changelog.txt"
 }

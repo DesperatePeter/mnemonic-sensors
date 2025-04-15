@@ -12,10 +12,10 @@ Restoring the desired backgrounds might require disabling this feature, saving t
 Feature implemented by Genir, all credits and many thanks to him!",,,
 ms_enableHyperspaceGridRemoval,Enable Hyperspace Map Grid Removal,Boolean,true,,"Set to true to remove the square grid in hyperspace map.",,,
 ms_enableGateMarks,Enable Gate Map Markers,Boolean,true,,"Set to true to mark systems that have gates on the star map (when not in Starscape view). Only activates after unlocking gate travel.",,,
+ms_disablePPTSound,Disable PPT warning sound,Boolean,false,,"Set to true to disable the warning sound played when ships will soon run out of peak performance time.",,,
 ,,,,,,,,
 ms_cheatsHeader,MS Cheats Header,Header,Cheats,,,,,
 ms_activateGates,Activate Gates,Boolean,false,,"Set to true to activate gate travel for the player, allowing you to skip the main quest. Has not yet been tested thoroughly. NOTE: THIS IS NOT REVERSIBLE! ",,,
-ms_disablePPTSound,Disable PPT warning sound,Boolean,false,,"Set to true to disable the warning sound played when ships will soon run out of peak performance time.",,,
 ms_enableGarage,Enable Garage,Boolean,true,,"If set to true, a legitimate businessman will open up shop at your colonies.",,,
 ,,,,,,,,
 ms_trashDisposalHeader,Trash Disposal Header,Header,Trash Disposal,,,,,Trash Disposal
