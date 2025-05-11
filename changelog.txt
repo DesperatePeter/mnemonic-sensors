@@ -1,5 +1,8 @@
 === For Starsector 0.98a ===
 
+- 0.5.1
+fix: replace custom made grid removal for hyperspace/system with delegate to vanilla setting, which was added in 0.98. This should fix any possible issues with grid removal.
+
 - 0.5.0
 feat: Update for Starsector version 0.98a
 fix: wrong category for disablePPTSound in LunaSettings

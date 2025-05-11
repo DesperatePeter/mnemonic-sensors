@@ -4,7 +4,7 @@
     "name": "MnemonicUtils",
     "author": "DesperatePeter",
     "utility": "true",
-    "version": { "major":"0", "minor": "5", "patch": "0" },
+    "version": { "major":"0", "minor": "5", "patch": "1" },
     "description": "Offers exploration utility features, such as marking known sensor traces and gates or filtering out worthless loot. Check LunaSettings for details.",
     "gameVersion": "0.98a",
     "jars":["jars/MnemonicUtils.jar"],
